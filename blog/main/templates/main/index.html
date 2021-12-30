@@ -1,0 +1,9 @@
+{% extends 'main/base.html' %}
+{% block title %}Main Page{% endblock %}
+{% block content %}
+    <div>
+        {% for blog in blogs %}
+            <a href="{% url 'main:blog-detail' blog.id %}">{{ blog.title }}</a><h4>{{ blog.description }}</h4><br>
+        {% endfor %}
+    </div>
+{% endblock %}
