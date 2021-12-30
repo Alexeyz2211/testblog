@@ -1,10 +1,22 @@
 version: "3.8"
 
 services:
+  redis:
+    image: redis
+    restart: always
+
   blog:
     restart: always
     build:
       context: ./
     ports:
     - '8000:8000'
+    volumes:
+      - "./blog/db:/app/blog/db"
     command: ["python", "blog/manage.py", "runserver", "0.0.0.0:8000"]
+
+  worker:
+    restart: always
+    build:
+      context: ./
+    command: ["celery", "-A", "blog", "worker" ]

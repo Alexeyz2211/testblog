@@ -11,5 +11,5 @@ from .tasks import send_email_notice
 def on_post_save(instance: models.Post, created: bool, **kwargs: Dict[str, Any]):
     if created:
         users = models.Subscription.objects.filter(blog__post=instance.id)
-        users = [u.user for u in users]
-        send_email_notice(users)
+        users_id = [u.user.id for u in users]
+        send_email_notice.delay(users_id)
